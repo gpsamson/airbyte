@@ -1,0 +1,104 @@
+version: "0.1.0"
+
+definitions:
+  schema_loader:
+    type: JsonSchema
+    file_path: "./source_aircall/schemas/{{ options['name'] }}.json"
+
+  root_selector:
+    type: RecordSelector
+    extractor:
+      type: DpathExtractor
+      field_pointer: []
+
+  requester:
+    type: HttpRequester
+    name: "{{ options['name'] }}"
+    url_base: "https://api.aircall.io"
+    http_method: "GET"
+    authenticator:
+      type: BasicHttpAuthenticator
+      username: "{{ config['api_id'] }}"
+      password: "{{ config['api_token'] }}"
+    error_handler:
+      backoff_strategies:
+          # See https://developer.aircall.io/api-references/#rate-limiting
+          - type: "WaitUntilTimeFromHeader"
+            header: "X-AircallApi-Reset"
+            regex: "d+"
+            min_wait: 60
+
+  paginator:
+    type: DefaultPaginator
+    page_size_option:
+      inject_into: "request_parameter"
+      field_name: "per_page"
+    pagination_strategy:
+      type: "PageIncrement"
+      page_size: 50
+    page_token_option:
+      inject_into: "request_parameter"
+      field_name: "page"
+    url_base: "*ref(definitions.requester.url_base)"
+
+  retriever:
+    type: SimpleRetriever
+    name: "{{ options['name'] }}"
+    primary_key: "{{ options['primary_key'] }}"
+    record_selector:
+      $ref: "*ref(definitions.root_selector)"
+
+  base_stream:
+    type: DeclarativeStream
+    primary_key: "id"
+    schema_loader:
+      $ref: "*ref(definitions.schema_loader)"
+    retriever:
+      $ref: "*ref(definitions.retriever)"
+      requester:
+        $ref: "*ref(definitions.requester)"
+      record_selector:
+      $ref: "*ref(definitions.root_selector)"
+
+  ## CALLS API ##
+  calls_stream:
+    $ref: "*ref(definitions.base_stream)"
+    primary_key: id
+    $options:
+      name: "calls"
+    retriever:
+      $ref: "*ref(definitions.retriever)"
+      record_selector:
+        extractor:
+          field_pointer: ["calls"]
+      requester:
+        $ref: "*ref(definitions.requester)"
+        path: "/v1/calls"
+      paginator:
+        $ref: "*ref(definitions.paginator)"
+
+  ## CONTACTS API ##
+  contacts_stream:
+    $ref: "*ref(definitions.base_stream)"
+    primary_key: id
+    $options:
+      name: "contacts"
+    retriever:
+      $ref: "*ref(definitions.retriever)"
+      record_selector:
+        extractor:
+          field_pointer: ["contacts"]
+      requester:
+        $ref: "*ref(definitions.requester)"
+        path: "/v1/contacts"
+      paginator:
+        $ref: "*ref(definitions.paginator)"
+
+streams:
+  - "*ref(definitions.calls_stream)"
+  - "*ref(definitions.contacts_stream)"
+
+check:
+  stream_names:
+    - calls
+    - contacts

@@ -1,0 +1,15 @@
+documentationUrl: https://docs.airbyte.com/integrations/sources/aircall
+connectionSpecification:
+  title: Aircall Source Spec
+  type: object
+  required:
+    - api_id
+    - api_token
+  additionalProperties: true
+  properties:
+    api_id:
+      type: string
+      airbyte_secret: true
+    api_token:
+      type: string
+      airbyte_secret: true
