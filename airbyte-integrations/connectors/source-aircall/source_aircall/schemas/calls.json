@@ -23,59 +23,59 @@
     "user": {
         "type": ["null", "object"],
         "properties": {
-        "id": "integer",
-        "direct_link": "string",
-        "name": "string",
-        "email": "string",
-        "available": "boolean",
-        "availability_status": "string",
-        "created_at": "string",
-        "time_zone": "string",
-        "language": "string",
-        "wrap_up_time": "number"
+        "id": {"type": "integer"},
+        "direct_link": {"type":"string"},
+        "name": {"type": "string"},
+        "email": {"type":"string"},
+        "available": {"type":"boolean"},
+        "availability_status": {"type": "string"},
+        "created_at": {"type":"string"},
+        "time_zone": {"type":"string"},
+        "language": {"type":"string"},
+        "wrap_up_time": {"type":"number"}
       }
     },
     "number": {
       "type": ["null", "object"],
       "properties": {
-      "id": "integer",
-      "direct_link": "string",
-      "name": "string",
-      "digits": "string",
-      "created_at": "string",
-      "country": "string",
-      "time_zone": "string",
-      "open": "boolean",
-      "availability_status": "string",
-      "is_ivr": "boolean",
-      "live_recording_activated": "boolean",
-      "priority": "boolean"
+      "id": {"type":"integer"},
+      "direct_link": {"type":"string"},
+      "name": {"type":"string"},
+      "digits": {"type":"string"},
+      "created_at": {"type":"string"},
+      "country": {"type":"string"},
+      "time_zone": {"type":"string"},
+      "open": {"type":"boolean"},
+      "availability_status": {"type":"string"},
+      "is_ivr": {"type":"boolean"},
+      "live_recording_activated": {"type":"boolean"},
+      "priority": {"type":"boolean"}
       }
     },
     "comments": {
       "type": ["null", "object"],
       "properties": {
-        "id": "integer",
-        "content": "string",
-        "posted_at": "integer",
-        "posted_by": ["null", "object"],
+        "id": {"type":"integer"},
+        "content": {"type":"string"},
+        "posted_at": {"type":"integer"},
+        "posted_by": {"type":["null", "object"]},
         "properties": {
-          "id": "integer",
-          "direct_link": "string",
-          "name": "string",
-          "email": "string",
-          "available": "boolean",
-          "availability_status": "string",
-          "created_at": "string"
+          "id": {"type":"integer"},
+          "direct_link": {"type":"string"},
+          "name": {"type":"string"},
+          "email": {"type":"string"},
+          "available": {"type":"boolean"},
+          "availability_status": {"type":"string"},
+          "created_at": {"type":"string"}
         }
       }
     },
     "tags": {
       "type": ["null", "object"],
       "properties": {
-        "id": "integer",
-        "name": "string",
-        "created_at": "integer"
+        "id": {"type":"integer"},
+        "name": {"type":"string"},
+        "created_at": {"type":"integer"}
       }
     },
     "participants": {
