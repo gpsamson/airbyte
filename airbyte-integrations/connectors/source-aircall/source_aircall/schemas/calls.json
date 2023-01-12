@@ -13,6 +13,76 @@
     },
     "answered_at": {
       "type": ["null", "number"]
+    },
+    "ended_at": {
+      "type": ["null", "number"]
+    },
+    "duration": {
+      "type": ["null", "number"]
+    },
+    "user": {
+        "type": ["null", "object"],
+        "properties": {
+        "id": "integer",
+        "direct_link": "string",
+        "name": "string",
+        "email": "string",
+        "available": "boolean",
+        "availability_status": "string",
+        "created_at": "string",
+        "time_zone": "string",
+        "language": "string",
+        "wrap_up_time": "number"
+      }
+    },
+    "number": {
+      "type": ["null", "object"],
+      "properties": {
+      "id": "integer",
+      "direct_link": "string",
+      "name": "string",
+      "digits": "string",
+      "created_at": "string",
+      "country": "string",
+      "time_zone": "string",
+      "open": "boolean",
+      "availability_status": "string",
+      "is_ivr": "boolean",
+      "live_recording_activated": "boolean",
+      "priority": "boolean"
+      }
+    },
+    "comments": {
+      "type": ["null", "object"],
+      "properties": {
+        "id": "integer",
+        "content": "string",
+        "posted_at": "integer",
+        "posted_by": ["null", "object"],
+        "properties": {
+          "id": "integer",
+          "direct_link": "string",
+          "name": "string",
+          "email": "string",
+          "available": "boolean",
+          "availability_status": "string",
+          "created_at": "string"
+        }
+      }
+    },
+    "tags": {
+      "type": ["null", "object"],
+      "properties": {
+        "id": "intger",
+        "name": "string",
+        "created_at": "integer"
+      }
+    },
+    "participants": {
+      "type": ["null", "object"]
+    },
+    "cost": {
+      "type": ["null", "string"]
     }
   }
 }
