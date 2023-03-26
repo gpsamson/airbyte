@@ -207,11 +207,6 @@ class CustomerBalanceTransactions(StripeStream):
         slices = parent_stream.stream_slices(sync_mode=SyncMode.full_refresh)
         for _slice in slices:
             for customer in parent_stream.read_records(sync_mode=SyncMode.full_refresh, stream_slice=_slice):
-                # we use `get` here because some attributes may not be returned by some API versions
-                if customer.get("next_invoice_sequence") == 1 and customer.get("balance") == 0:
-                    # We're making this check in order to speed up a sync. if a customer's balance is 0 and there are no
-                    # associated invoices, he shouldn't have any balance transactions. So we're saving time of one API call per customer.
-                    continue
                 yield customer
 
 
